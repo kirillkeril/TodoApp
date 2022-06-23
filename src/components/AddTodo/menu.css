@@ -1,0 +1,7 @@
+.menu {
+    @apply w-full flex justify-between items-end;
+    @apply absolute bottom-0 left-0;
+}
+.menu-item {
+
+}
