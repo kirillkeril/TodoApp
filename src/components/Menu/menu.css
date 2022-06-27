@@ -1,0 +1,15 @@
+.menu {
+    @apply mt-20;
+    @apply w-full flex justify-between items-end;
+    @apply pb-2 px-4 pt-4 rounded-t-2xl;
+    @apply sticky bottom-0;
+    @apply bg-neutral-800;
+}
+.menu-item {
+    @apply text-4xl text-teal-400;
+}
+.menu-item .add-todo {
+    @apply bg-neutral-800 px-5 pt-5 rounded-t-full;
+    @apply text-7xl;
+    @apply absolute bottom-1.5 left-1/2 -translate-x-1/2;
+}

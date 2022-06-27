@@ -7,5 +7,5 @@ body {
     @apply min-h-screen;
 }
 #root {
-    @apply min-h-screen;
+    @apply min-h-screen flex flex-col justify-between;
 }
