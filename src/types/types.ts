@@ -1,9 +1,12 @@
-export interface ITodoItem {
+export type Todo = {
     id: number;
     title: string;
-    description?: string;
-    priority?: 1 | 2 | 3;
-    date: number;
+    description: string;
     completed: boolean;
-    subTodo?: ITodoItem;
+    priority: 1 | 2 | 3 | 4;
+    subTodo: Todo[];
+}
+
+export type TodoState = {
+    list: Todo[];
 }

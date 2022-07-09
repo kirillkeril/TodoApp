@@ -1,11 +1,25 @@
-@tailwind base;
-@tailwind utilities;
-@tailwind components;
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600&display=swap');
+@import-normalize;
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    --colors-accent-dark: #05386B;
+    --colors-accent-light: #edf5e1;
+    --colors-accent-medium: #379683;
+    --colors-bg-light: #8ee4af;
+    --colors-bg-dark: #5cdb95;
+}
 body {
-    @apply bg-gray-500;
-    @apply min-h-screen;
+    font-family: 'Comfortaa', cursive;
+    min-height: 100vh;
+    min-width: 100vw;
+    background: var(--colors-bg-light);
 }
 #root {
-    @apply min-h-screen flex flex-col justify-between;
+    margin: 0 auto;
+    width: 100%;
 }
