@@ -41,7 +41,7 @@ const TodoItemContent = styled.div`
   align-items: end;
   .desc {
     max-width: 90%;
-    word-wrap: break-word;
+    word-break: break-word;
   }
 `;
 
