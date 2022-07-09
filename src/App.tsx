@@ -82,6 +82,12 @@ function App() {
 
     const globalState = useAppSelector(state => state.global);
 
+    if (width.matches) {
+        dispatch(setIsLargeScreen(true));
+    }else {
+        dispatch(setIsLargeScreen(false));
+    }
+
     const setIsModal = (event: React.MouseEvent) => {
       event.stopPropagation();
       event.preventDefault();
@@ -89,17 +95,17 @@ function App() {
     }
 
     useEffect(() => {
-        width.onchange = (ev) => {
+        width.onchange = ev => {
             if (ev.matches) {
                 dispatch(setIsLargeScreen(true));
-            } else {
+            }else {
                 dispatch(setIsLargeScreen(false));
             }
         }
         if(todos.length === 0){
             dispatch(getTodos());
         }
-    }, [globalState.isLargeScreen, dispatch])
+    }, [width.matches, globalState.isLargeScreen, dispatch])
     return (
         <>
             <Header onClick={() => {
