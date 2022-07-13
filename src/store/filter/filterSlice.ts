@@ -2,13 +2,13 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export interface IFilter {
     search: string;
-    sortBy: "date" | "priorityUp" | "priorityDown";
+    sortBy: "date" | "foreground" | "lessForeground";
     checked: boolean | undefined;
 }
 
 const initialState: IFilter = {
     search: "",
-    sortBy: "date",
+    sortBy: "foreground",
     checked: undefined,
 }
 
@@ -18,7 +18,7 @@ const filterSlice = createSlice({
         setSearch: (state, action: PayloadAction<string>) => {
             state.search = action.payload;
         },
-        setSort: (state, action: PayloadAction<"date" | "priorityUp" | "priorityDown">) => {
+        setSort: (state, action: PayloadAction<"date" | "foreground" | "lessForeground">) => {
             state.sortBy = action.payload;
         },
         setChecked: (state, action: PayloadAction<boolean | undefined>) => {

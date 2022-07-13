@@ -9,10 +9,14 @@ import ListOf from "./Components/Common/ListOf";
 import TodoItem from "./Components/todoItem";
 import Modal from "./Components/Common/Modal";
 import CreateTodo from "./Components/createTodo";
-import {UiTitleH1} from "./Components/UI/UiTitle";
+import {UiTitleH1, UiTitleH3} from "./Components/UI/UiTitle";
 import {Wrapper} from "./Components/UI/Wrapper";
 import Filter from "./Components/filter";
 import {UiButton} from "./Components/UI/UiButton";
+import {useFilter} from "./hooks/useFilter";
+import {useSort} from "./hooks/usesort";
+import {Todo} from "./types/types";
+
 
 const AppWrapper = styled.div`
   margin: 0 auto;
@@ -43,41 +47,37 @@ function App() {
     const width = window.matchMedia('(min-width: 768px)');
 
     const {sortBy, search, checked} = useAppSelector(state => state.filter);
-
-    const todos = useAppSelector(state =>
-        {
-            let filteredTodos = state.todos.list.filter(
-                i => (i.title.toLowerCase().includes(search.toLowerCase()) ||
-                i.description.toLowerCase().includes(search.toLowerCase()))
-            )
-            if(checked !== undefined){
-                filteredTodos = filteredTodos.filter(i => i.completed === checked);
-            }
-            return filteredTodos.sort((a, b) => {
-                switch (sortBy) {
-                    case "priorityUp":
-                        if (b.priority > a.priority) {
-                            return 1
-                        }
-                        if (b.priority < a.priority) {
-                            return -1
-                        } else {
-                            return b.id > a.id ? 1 : -1;
-                        }
-                    case "priorityDown":
-                        if (a.priority > b.priority) {
-                            return 1
-                        }
-                        if (a.priority < b.priority) {
-                            return -1
-                        } else {
-                            return b.id > a.id ? 1 : -1;
-                        }
-                    default: return b.id > a.id ? 1 : -1;
-                }
-            })
+    const todos = useAppSelector(state => state.todos.list);
+    const visibleTodos = useSort(
+        useFilter(todos, i => {
+            return (i.title.toLowerCase().includes(search.toLowerCase())
+                || i.description.toLowerCase().includes(search.toLowerCase())) && (checked ? i.completed : i);
+        }),
+        (a: Todo, b: Todo) => {
+            switch (sortBy) {
+                case "lessForeground":
+                    if (b.priority > a.priority) {
+                        return 1
+                    }
+                    if (b.priority < a.priority) {
+                        return -1
+                    } else {
+                        return b.id > a.id ? 1 : -1;
+                    }
+                case "foreground":
+                    if (a.priority > b.priority) {
+                        return 1
+                    }
+                    if (a.priority < b.priority) {
+                        return -1
+                    } else {
+                        return b.id > a.id ? 1 : -1;
+                    }
+                default: return b.id > a.id ? 1 : -1;
         }
-    );
+    });
+
+
     const dispatch = useAppDispatch();
 
     const globalState = useAppSelector(state => state.global);
@@ -141,18 +141,25 @@ function App() {
             }
 
             <AppWrapper>
-                {!globalState.modal && <ListOf
-                    items={todos}
-                    renderItem={(todo) => <TodoItem
-                        key={todo.id}
-                        id={todo.id}
-                        title={todo.title}
-                        priority={todo.priority}
-                        completed={todo.completed}
-                        subTodo={todo.subTodo}
-                        description={todo.description}
-                    />}
-                />}
+                {
+                    visibleTodos.length > 0 ?
+                    !globalState.modal && visibleTodos.length > 0 &&
+                    <ListOf
+                        items={visibleTodos}
+                        renderItem={(todo) =>
+                            <TodoItem
+                                key={todo.id}
+                                id={todo.id}
+                                title={todo.title}
+                                priority={todo.priority}
+                                completed={todo.completed}
+                                subTodo={todo.subTodo}
+                                description={todo.description}
+                            />
+                        }
+                    />
+                    : <UiTitleH3>Задачи не найдены</UiTitleH3>
+                }
         </AppWrapper>
         </>
 

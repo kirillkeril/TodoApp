@@ -8,13 +8,13 @@ import {setChecked, setSearch, setSort} from "../store/filter/filterSlice";
 import {Flex} from "./UI/Flex";
 
 interface ISortOption {
-    value: "date" | "priorityUp" | "priorityDown";
+    value: "date" | "foreground" | "lessForeground";
     label: string;
 }
 const optionsSort: ISortOption[] = [
-    {value: "date", label: "Сортировать по дате добавления"},
-    {value: "priorityUp", label: "...по приоритету (по возрастанию)"},
-    {value: "priorityDown", label: "..по приоритету (по убыванию)"},
+    {value: "date", label: "Сначала новые"},
+    {value: "foreground", label: "Сначала важные"},
+    {value: "lessForeground", label: "Сначала менее важные"},
 ]
 
 interface ICheckOption {
@@ -29,12 +29,12 @@ const optionsCheck: ICheckOption[] = [
 
 interface FilterInterface{
     search: string;
-    sortBy: "date" | "priorityUp" | "priorityDown";
+    sortBy: "date" | "foreground" | "lessForeground";
     checked: boolean | undefined;
 }
 const initialState: FilterInterface = {
     search: "",
-    sortBy: "date",
+    sortBy: "foreground",
     checked: undefined,
 }
 
